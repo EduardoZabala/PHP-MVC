@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Cliente</title>
+    <title> Carrera</title>
     <!-- Icons bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -32,10 +32,10 @@
                         <a class="nav-link" href="#">Pricing</a>
                     </li>
                 </ul>
-                
+
             </div>
         </nav>
-        <h2 class="mt-1">Lista de Usuarios</h2>
+        <h2 class="mt-1">Lista de Carrera</h2>
         <!-- Filtros -->
         <div class="row mb-3">
             <div class="col-md-6">
@@ -54,9 +54,9 @@
             </div>
         </div>
 
-        <a href="./ClientsController.php?create=true">
+        <a href="./CareersController.php?create=true">
             <button class="btn btn-success">
-                Crear usuario
+                Crear carrera
             </button>
         </a>
 
@@ -64,50 +64,34 @@
         <table class="table table-bordered my-3">
             <thead>
                 <tr>
-                    <th>Nombre Completo</th>
-                    <th>Cédula</th>
-                    <th>Rol</th>
-                    <th>Celular</th>
+                    <th>Nombre</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="user-table-body">
                 <!-- Los usuarios se generarán dinámicamente aquí -->
                 <?php foreach ($results->registers as $user): ?>
-                    <tr>
-                        <td><?php echo ($user->nombre_completo) ?></td>
-                        <td><?php echo ($user->cedula) ?></td>
-                        <td>
-                            <?php foreach ($roles as $role): ?>
-                                <?php if ($user->role_id === $role->role_id): ?>
-                                    <?php
-                                    echo ($role->nombre);
-
-                                    break;
-                                    ?>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                        </td>
-                        <td><?php echo ($user->celular) ?></td>
-                        <td>
-                            <a href="http://localhost/CRUD-php/controllers/ClientsController.php?userId=<?php echo ($user->id) ?>" class="btn btn-warning btn-sm edit-user" data-id="1">Editar</a>
-                            <a href="http://localhost/CRUD-php/controllers/ClientsController.php?deleteId=<?php echo ($user->id) ?>" class="btn btn-danger btn-sm delete-user">Eliminar</a>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
+                <tr>
+                    <td><?php echo ($user->nombre_carrera) ?></td>
+                    <td>
+                        <a href="http://localhost/CRUD-php/controllers/CareersController.php?userId=<?php echo ($user->id) ?>" class="btn btn-warning btn-sm edit-user" data-id="1">Editar</a>
+                        <a href="http://localhost/CRUD-php/controllers/CareersController.php?deleteId=<?php echo ($user->id) ?>" class="btn btn-danger btn-sm delete-user">Eliminar</a>
+                    </td>
+                </tr>
+                <?php endforeach?>
             </tbody>
         </table>
 
         <!-- Paginación -->
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
+        <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="http://localhost/CRUD-php/controllers/ClientsController.php?page=<?php echo (($results->currentPage - 1 == 0) ? 1 : $results->currentPage - 1) ?>" aria-label="Previous">
+                    <a class="page-link" href="http://localhost/CRUD-php/controllers/CareersController.php?page=<?php echo (($results->currentPage - 1 == 0) ? 1 : $results->currentPage - 1) ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <?php $count = 0 ?>
-                <li class="page-item"><a class="page-link" href="http://localhost/CRUD-php/controllers/ClientsController.php?page=<?php echo ($results->currentPage) ?>"><?php echo ($results->currentPage) ?></a></li>
+                <li class="page-item"><a class="page-link" href="http://localhost/CRUD-php/controllers/CareersController.php?page=<?php echo ($results->currentPage) ?>"><?php echo ($results->currentPage) ?></a></li>
 
                 <?php for ($i = $results->currentPage; $i <= $results->totalPages; $i++): ?>
                     <?php
@@ -118,15 +102,14 @@
                         break;
                     }
                     ?>
-                    <li class="page-item"><a class="page-link" href="http://localhost/CRUD-php/controllers/ClientsController.php?page=<?php echo ($i) ?>"><?php echo ($i) ?></a></li>
+                    <li class="page-item"><a class="page-link" href="http://localhost/CRUD-php/controllers/CareersController.php?page=<?php echo ($i) ?>"><?php echo ($i) ?></a></li>
                     <?php $count++ ?>
                 <?php endfor ?>
                 <li class="page-item">
-                    <a class="page-link" href="http://localhost/CRUD-php/controllers/ClientsController.php?page=<?php echo (($results->currentPage + 1 < $results->totalPages) ? $results->currentPage + 1 : $results->totalPages) ?>" aria-label="Next">
+                    <a class="page-link" href="http://localhost/CRUD-php/controllers/CareersController.php?page=<?php echo (($results->currentPage + 1 < $results->totalPages) ? $results->currentPage + 1 : $results->totalPages) ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
-            </ul>
         </nav>
     </div>
 
