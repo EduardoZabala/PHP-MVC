@@ -1,8 +1,12 @@
 <?php
 namespace controllers;
+
 require_once(__DIR__ . '/../autoload.php');
 use Models\Client;
 use Services\RoleService;
+use Services\CareerService;
+use Services\UserService;
+use controllers\StudentsController;
 class ClientsController extends Client
 {
  
@@ -40,8 +44,15 @@ class ClientsController extends Client
         if ($result->status === 200) {
 
             $roleService = new RoleService();
+            $userService = new UserService();
+            $carrerService = new CareerService();
             $roles = $roleService->getRoles();
+            $users = $userService->getUsers();
+            $careers = $carrerService->getCarrers();
+            // echo (json_encode($careers));
             $userData = $result->user;
+            
+            echo (json_encode($userData));
             $title = 'Editar usuario';
             require_once('../views/ClientManager.php');
 
@@ -67,7 +78,7 @@ class ClientsController extends Client
 }
 
 $controllerInstance = new ClientsController();
-
+$StudentInstance    = new StudentsController();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     if(isset($_GET['create'])) {
@@ -83,6 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['create'])){
         $controllerInstance->store($_POST);
+    }else if(isset($_POST['createStudent'])){
+        $StudentInstance->store($_POST);
     }else if(isset($_POST['userId'])){
         $controllerInstance->edit($_POST);
     }
