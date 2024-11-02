@@ -37,22 +37,26 @@
         </nav>
         <h2 class="mt-1">Lista de Carrera</h2>
         <!-- Filtros -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="search-input"
-                    placeholder="Buscar usuario por nombre o cédula">
+        <form action="GET">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="search-input" name="filter"
+                        placeholder="Buscar usuario por nombre o cédula">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="role-filter">
+                        <option value="">Filtrar por rol</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Usuario</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-secondary" id="clear-filters">Limpiar Filtros</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <select class="form-select" id="role-filter">
-                    <option value="">Filtrar por rol</option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Usuario</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-secondary" id="clear-filters">Limpiar Filtros</button>
-            </div>
-        </div>
+
+        </form>
+
 
         <a href="./CareersController.php?create=true">
             <button class="btn btn-success">
@@ -71,20 +75,20 @@
             <tbody id="user-table-body">
                 <!-- Los usuarios se generarán dinámicamente aquí -->
                 <?php foreach ($results->registers as $user): ?>
-                <tr>
-                    <td><?php echo ($user->nombre_carrera) ?></td>
-                    <td>
-                        <a href="http://localhost/CRUD-php/controllers/CareersController.php?userId=<?php echo ($user->id) ?>" class="btn btn-warning btn-sm edit-user" data-id="1">Editar</a>
-                        <a href="http://localhost/CRUD-php/controllers/CareersController.php?deleteId=<?php echo ($user->id) ?>" class="btn btn-danger btn-sm delete-user">Eliminar</a>
-                    </td>
-                </tr>
-                <?php endforeach?>
+                    <tr>
+                        <td><?php echo ($user->nombre_carrera) ?></td>
+                        <td>
+                            <a href="http://localhost/CRUD-php/controllers/CareersController.php?userId=<?php echo ($user->id) ?>" class="btn btn-warning btn-sm edit-user" data-id="1">Editar</a>
+                            <a href="http://localhost/CRUD-php/controllers/CareersController.php?deleteId=<?php echo ($user->id) ?>" class="btn btn-danger btn-sm delete-user">Eliminar</a>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
             </tbody>
         </table>
 
         <!-- Paginación -->
         <nav aria-label="Page navigation example">
-        <ul class="pagination">
+            <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link" href="http://localhost/CRUD-php/controllers/CareersController.php?page=<?php echo (($results->currentPage - 1 == 0) ? 1 : $results->currentPage - 1) ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>

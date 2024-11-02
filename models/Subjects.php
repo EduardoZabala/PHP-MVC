@@ -5,66 +5,60 @@ namespace Models;
 use PDOException;
 use Traits\Connection;
 
-class Client {
+class Subjects {
 
     private $id;
-    private $completeName;
-    private $identityDocument;
-    private $role;
-    private $celNumber;
-    private $password;
+    private $name;
+    private $StudentsCapacity;
+    private $id_professor;
+
 
     use Connection;
 
-    protected function __construct($name, $identityDocument, $role, $number, $password = null, $id = null) {
-        $this->completeName = $name;
-        $this->identityDocument = $identityDocument;
-        $this->role = $role;
-        $this->celNumber = $number;
-        $this->password = $password;
+    protected function __construct($name, $StudentsCapacity, $id_professor, $id = null) {
+        $this->name = $name;
+        $this->StudentsCapacity = $StudentsCapacity;
+        $this->id_professor = $id_professor;
         $this->id = $id;
     }
 
-    protected function storeUser() {
+    protected function storeSubject() {
         $this->openConnection();
 
         try {
-            $query = "INSERT INTO usuarios (nombre_completo, cedula, role_id, celular, clave) VALUES (:name, :document, :role, :cel, :password)";
+            $query = "INSERT INTO materia (nombre_materia, cantidad_max_alumnos, id_profesor) VALUES (:name, :maxStudent, :id_professor)";
             $statement = $this->conn->prepare($query);
             $statement->execute(
                     [
-                        ':name' => $this->completeName,
-                        ':document' => $this->identityDocument,
-                        ':role' => $this->role,
-                        ':cel' => $this->celNumber,
-                        ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
+                        ':name' => $this->name,
+                        ':maxStudent' => $this->StudentsCapacity,
+                        ':id_professor' => $this->id_professor
                     ]
                 );
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=Usuario registrado con éxito&success=1');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=Materia registrada con éxito&success=1');
         } catch(PDOException $ex) {
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=' . $ex->getMessage() . '&success=0');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=' . $ex->getMessage() . '&success=0');
         } finally {
             $this->closeConnection();
+            die();
         }
     }
-    protected function updateUser() {
+    protected function updateSubject() {
         $this->openConnection();
         try {
-            $query = "UPDATE usuarios SET nombre_completo=:name, cedula = :document, role_id = :role , celular=:cel, clave=:password WHERE id = :id";
+            $query = "UPDATE materia SET nombre_materia=:name, cantidad_max_alumnos = :maxStudent ,id_profesor=:id_professor WHERE id = :id";
             $statement = $this->conn->prepare($query);
             $statement->execute(
                     [
-                        ':name' => $this->completeName,
-                        ':document' => $this->identityDocument,
-                        ':role' => $this->role,
-                        ':cel' => $this->celNumber,
-                        ':password' => password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]),
+                        ':name' => $this->name,
+                        ':maxStudent' => $this->StudentsCapacity,
+                        ':id_profesor' => $this->id_professor,
                         ':id' => $this->id,
                     ]
             );
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=Usuario actualizado con éxito&success=1');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=Materia actualizada con éxito&success=1');
         } catch(PDOException $ex) {
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=' . $ex->getMessage() . '&success=0');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=' . $ex->getMessage() . '&success=0');
         } finally {
             $this->closeConnection();
         }
@@ -73,7 +67,7 @@ class Client {
         $this->openConnection();
 
         try {
-            $query = 'SELECT  id, nombre_completo, cedula, role_id, celular FROM usuarios where id = :id';
+            $query = 'SELECT  * FROM materia where id = :id';
             $statement = $this->conn->prepare($query);
             $statement->execute([
                 ':id' => $id
@@ -99,7 +93,7 @@ class Client {
         }
         
     }
-    // Paginacion
+    // Paginacion no implementada
     protected function getPaginated($page = 1, $filters = []){
         $resultsPerPage = 2;
 
@@ -170,20 +164,20 @@ class Client {
             $this->closeConnection();
         }
     }
-    protected function deleteUser($id){
+    protected function deleteSubject($id){
         $this->openConnection();
         
         try {
-            $query = "DELETE FROM usuarios WHERE id = :id";
+            $query = "DELETE FROM materia WHERE id = :id";
             $statement = $this->conn->prepare($query);
             $statement->execute(
                     [
                         ':id'=> $id,
                     ]
                 );
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=Usuario eliminado con éxito&success=1');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=Materia eliminada con éxito&success=1');
         } catch(PDOException $ex) {
-            header('Location: http://localhost/CRUD-PHP/controllers/ClientsController.php?message=' . $ex->getMessage() . '&success=0');
+            header('Location: http://localhost/CRUD-PHP/controllers/CareersController.php?message=' . $ex->getMessage() . '&success=0');
         } finally {
             $this->closeConnection();
         }  

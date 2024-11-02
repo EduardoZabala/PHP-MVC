@@ -7,6 +7,8 @@ use Services\RoleService;
 use Services\CareerService;
 use Services\UserService;
 use controllers\StudentsController;
+use controllers\ProfessorController;
+
 class ClientsController extends Client
 {
  
@@ -79,6 +81,7 @@ class ClientsController extends Client
 
 $controllerInstance = new ClientsController();
 $StudentInstance    = new StudentsController();
+$ProfessorInstance    = new ProfessorController();
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     if(isset($_GET['create'])) {
@@ -92,10 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $controllerInstance->index();    
     }
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
     if (isset($_POST['create'])){
         $controllerInstance->store($_POST);
     }else if(isset($_POST['createStudent'])){
         $StudentInstance->store($_POST);
+    }else if(isset($_POST['createProfessor'])){
+        $ProfessorInstance->store($_POST);
     }else if(isset($_POST['userId'])){
         $controllerInstance->edit($_POST);
     }

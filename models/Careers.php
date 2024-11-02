@@ -83,7 +83,7 @@ class Careers {
     }
     // Paginacion
     protected function getPaginated($page = 1, $filters = []){
-        $resultsPerPage = 5;
+        $resultsPerPage = 2;
 
         $query = "SELECT * FROM carrera";
         $queryCount = "SELECT COUNT(id) AS total_users FROM carrera";

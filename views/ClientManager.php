@@ -148,7 +148,7 @@
                             </div><!-- fin label  -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Devolverse</button>
-                                <button type="submit" class="btn btn-primary" name="createProfesor">Guardar Profesor</button>
+                                <button type="submit" class="btn btn-primary" name="createProfessor">Guardar Profesor</button>
                             </div>
                         </form>
                     </div>

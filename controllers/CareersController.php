@@ -2,6 +2,7 @@
 namespace controllers;
 require_once(__DIR__ . '/../autoload.php');
 use Models\Careers;
+use Services\ProfessorService;
 class CareersController extends Careers
 {
  
@@ -9,6 +10,8 @@ class CareersController extends Careers
 
     public function create() {
         $title = 'Crear Carrera';
+        $Professors = new ProfessorService();
+        $Professors= $Professors->getProfessor();
         require_once(__DIR__ . '/../views/CareerManager.php');
     }
     public function store($request) {
@@ -20,7 +23,6 @@ class CareersController extends Careers
         
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $results = $this->getPaginated($page);
-        
         require_once('../views/TablesCareer.php');
     }
     //Este metodo es el que trae los datos y los coloca en el formulario
@@ -49,6 +51,7 @@ class CareersController extends Careers
 }
 
 $controllerInstance = new CareersController();
+$subjectInstance = new SubjectsController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
@@ -60,11 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }else if(isset($_GET['deleteId'])){
         $controllerInstance->delete($_GET['deleteId']);
     }else{
-           $controllerInstance->index();
+        $controllerInstance->index();
     }  
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['create'])){
         $controllerInstance->store($_POST);
+    }else if(isset($_POST['createMateria'])){
+        $subjectInstance->store($_POST);
     }else if(isset($_POST['userId'])){
         $controllerInstance->edit($_POST);
     }
